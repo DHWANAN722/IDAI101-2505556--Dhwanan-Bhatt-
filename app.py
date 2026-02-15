@@ -444,7 +444,7 @@ def show_dashboard_overview(filtered_df, full_df):
         fig.update_xaxes(showgrid=True, gridwidth=0.5, gridcolor='rgba(255,255,255,0.1)')
         fig.update_yaxes(showgrid=True, gridwidth=0.5, gridcolor='rgba(255,255,255,0.1)')
         
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     with tab2:
         # Volume analysis
@@ -511,7 +511,7 @@ def show_dashboard_overview(filtered_df, full_df):
         fig_vol.update_xaxes(showgrid=True, gridwidth=0.5, gridcolor='rgba(255,255,255,0.1)')
         fig_vol.update_yaxes(showgrid=True, gridwidth=0.5, gridcolor='rgba(255,255,255,0.1)')
         
-        st.plotly_chart(fig_vol, use_container_width=True)
+        st.plotly_chart(fig_vol, width='stretch')
     
     with tab3:
         # Technical indicators
@@ -544,7 +544,7 @@ def show_dashboard_overview(filtered_df, full_df):
                 yaxis=dict(range=[0, 100])
             )
             
-            st.plotly_chart(fig_rsi, use_container_width=True)
+            st.plotly_chart(fig_rsi, width='stretch')
         
         with col_b:
             # Moving averages
@@ -580,7 +580,7 @@ def show_dashboard_overview(filtered_df, full_df):
                 font=dict(color='white')
             )
             
-            st.plotly_chart(fig_ma, use_container_width=True)
+            st.plotly_chart(fig_ma, width='stretch')
     
     with tab4:
         # Heatmap of correlations
@@ -611,7 +611,7 @@ def show_dashboard_overview(filtered_df, full_df):
             font=dict(color='white')
         )
         
-        st.plotly_chart(fig_heatmap, use_container_width=True)
+        st.plotly_chart(fig_heatmap, width='stretch')
 
 def show_advanced_analytics(filtered_df):
     """Advanced analytics page with statistical analysis"""
@@ -649,7 +649,7 @@ def show_advanced_analytics(filtered_df):
             yaxis_title="Frequency"
         )
         
-        st.plotly_chart(fig_dist, use_container_width=True)
+        st.plotly_chart(fig_dist, width='stretch')
     
     with col2:
         # Returns distribution
@@ -676,7 +676,7 @@ def show_advanced_analytics(filtered_df):
             yaxis_title="Frequency"
         )
         
-        st.plotly_chart(fig_ret_dist, use_container_width=True)
+        st.plotly_chart(fig_ret_dist, width='stretch')
     
     # Statistical metrics
     st.markdown("### 📈 Statistical Summary")
@@ -734,7 +734,7 @@ def show_advanced_analytics(filtered_df):
         hovermode='x unified'
     )
     
-    st.plotly_chart(fig_vol_evolution, use_container_width=True)
+    st.plotly_chart(fig_vol_evolution, width='stretch')
     
     # Price range analysis
     st.markdown("### 📏 Intraday Range Analysis")
@@ -760,7 +760,7 @@ def show_advanced_analytics(filtered_df):
         yaxis_title="Range %"
     )
     
-    st.plotly_chart(fig_range, use_container_width=True)
+    st.plotly_chart(fig_range, width='stretch')
 
 def show_pattern_generator(amplitude, frequency, phase, noise_level, drift, pattern_type):
     """Mathematical pattern generator page"""
@@ -812,7 +812,7 @@ def show_pattern_generator(amplitude, frequency, phase, noise_level, drift, patt
         yaxis_title="Value"
     )
     
-    st.plotly_chart(fig_pattern, use_container_width=True)
+    st.plotly_chart(fig_pattern, width='stretch')
     
     # Pattern statistics
     st.markdown("### 📊 Pattern Statistics")
@@ -874,7 +874,7 @@ def show_pattern_generator(amplitude, frequency, phase, noise_level, drift, patt
         font=dict(color='white')
     )
     
-    st.plotly_chart(fig_comparison, use_container_width=True)
+    st.plotly_chart(fig_comparison, width='stretch')
     
     # Comparison metrics
     col_a, col_b = st.columns(2)
@@ -981,7 +981,7 @@ def show_volatility_analyzer(filtered_df):
         showlegend=True
     )
     
-    st.plotly_chart(fig_regime, use_container_width=True)
+    st.plotly_chart(fig_regime, width='stretch')
     
     # Volatility surface
     st.markdown("### 🌊 Volatility Surface")
@@ -1016,7 +1016,7 @@ def show_volatility_analyzer(filtered_df):
         yaxis_title="Volatility (%)"
     )
     
-    st.plotly_chart(fig_surface, use_container_width=True)
+    st.plotly_chart(fig_surface, width='stretch')
     
     # High volatility events
     st.markdown("### ⚠️ High Volatility Events")
@@ -1055,7 +1055,7 @@ def show_volatility_analyzer(filtered_df):
         font=dict(color='white')
     )
     
-    st.plotly_chart(fig_events, use_container_width=True)
+    st.plotly_chart(fig_events, width='stretch')
 
 def show_deep_dive(filtered_df):
     """Deep dive analysis with advanced metrics"""
@@ -1102,7 +1102,7 @@ def show_deep_dive(filtered_df):
         yaxis_title="Momentum (%)"
     )
     
-    st.plotly_chart(fig_momentum, use_container_width=True)
+    st.plotly_chart(fig_momentum, width='stretch')
     
     # Volume profile
     st.markdown("### 📊 Volume Profile Analysis")
@@ -1139,7 +1139,7 @@ def show_deep_dive(filtered_df):
             yaxis_title="Price Level ($)"
         )
         
-        st.plotly_chart(fig_vol_profile, use_container_width=True)
+        st.plotly_chart(fig_vol_profile, width='stretch')
     
     with col2:
         # VWAP (Volume Weighted Average Price)
@@ -1170,7 +1170,7 @@ def show_deep_dive(filtered_df):
             font=dict(color='white')
         )
         
-        st.plotly_chart(fig_vwap, use_container_width=True)
+        st.plotly_chart(fig_vwap, width='stretch')
     
     # Market efficiency metrics
     st.markdown("### 🎯 Market Efficiency Metrics")
@@ -1217,7 +1217,7 @@ def show_deep_dive(filtered_df):
     
     st.dataframe(
         display_df.tail(50).style.background_gradient(cmap='coolwarm', subset=['Daily_Return']),
-        use_container_width=True,
+        width='stretch',
         height=400
     )
 
