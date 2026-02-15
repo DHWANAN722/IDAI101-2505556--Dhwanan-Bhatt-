@@ -7,21 +7,50 @@ import plotly.graph_objects as go
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(layout="wide", page_title="Crypto Volatility Visualizer")
 
-# ---------------- CUSTOM DARK THEME ----------------
+# ---------------- FULL DARK + BLUE THEME ----------------
 st.markdown("""
 <style>
+
+/* Main background */
 [data-testid="stAppViewContainer"] {
     background-color: #0e1117;
 }
+
+/* Sidebar background */
+[data-testid="stSidebar"] {
+    background-color: #111827;
+}
+
+/* Sidebar text */
+[data-testid="stSidebar"] * {
+    color: #00BFFF !important;
+}
+
+/* Headings */
 h1, h2, h3, h4, h5 {
     color: #00BFFF;
 }
+
+/* Paragraph text */
 p, label {
     color: #d1e8ff;
 }
+
+/* Slider track */
+.stSlider > div > div > div > div {
+    background-color: #00BFFF;
+}
+
+/* Dropdown styling */
+div[data-baseweb="select"] > div {
+    background-color: #1f2937 !important;
+    color: #00BFFF !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
+# ---------------- TITLE ----------------
 st.title("🚀 Crypto Volatility Visualizer")
 st.markdown("### Real-Time Volatility Simulation & Analysis")
 st.divider()
@@ -48,7 +77,7 @@ def load_data():
 
 df = load_data()
 
-# ---------------- SIMULATION ----------------
+# ---------------- SIMULATION LOGIC ----------------
 if pattern == "Simulated Wave":
     t = np.linspace(0, 10, len(df))
     df["Close"] = amplitude * np.sin(frequency * t) + drift * t + 100
@@ -81,7 +110,19 @@ fig_price.update_layout(
     font=dict(color="#00BFFF")
 )
 
-# ---------------- HIGH LOW ----------------
+# ---------------- ROLLING VOLATILITY ----------------
+df["Rolling Volatility"] = df["Close"].rolling(window=10).std()
+
+fig_roll = px.line(df, x="Timestamp", y="Rolling Volatility")
+fig_roll.update_traces(line=dict(color="#00BFFF", width=2))
+fig_roll.update_layout(
+    title="Rolling Volatility (10-Period)",
+    plot_bgcolor="white",
+    paper_bgcolor="#0e1117",
+    font=dict(color="#00BFFF")
+)
+
+# ---------------- HIGH vs LOW ----------------
 fig_hl = go.Figure()
 fig_hl.add_trace(go.Scatter(
     x=df["Timestamp"], y=df["High"],
@@ -110,18 +151,6 @@ fig_vol.update_layout(
     font=dict(color="#00BFFF")
 )
 
-# ---------------- ROLLING VOLATILITY ----------------
-df["Rolling Volatility"] = df["Close"].rolling(window=10).std()
-
-fig_roll = px.line(df, x="Timestamp", y="Rolling Volatility")
-fig_roll.update_traces(line=dict(color="#00BFFF", width=2))
-fig_roll.update_layout(
-    title="Rolling Volatility (10-Period)",
-    plot_bgcolor="white",
-    paper_bgcolor="#0e1117",
-    font=dict(color="#00BFFF")
-)
-
 # ---------------- LAYOUT ----------------
 col1, col2 = st.columns(2)
 col1.plotly_chart(fig_price, use_container_width=True)
@@ -132,3 +161,4 @@ st.divider()
 col3, col4 = st.columns(2)
 col3.plotly_chart(fig_hl, use_container_width=True)
 col4.plotly_chart(fig_vol, use_container_width=True)
+
